@@ -112,7 +112,7 @@ public class Normalise implements Runnable {
 				switch (c) {
 				
 				case -1:
-					// end of line in middle of line
+					// end of file in middle of line
 					w.append('\n');
 					return w;
 					
