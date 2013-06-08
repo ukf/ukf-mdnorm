@@ -1,3 +1,7 @@
+# Maven
+/target/
+
+# Github standard Java ignores follow
 *.class
 
 # Package Files #
