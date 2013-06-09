@@ -9,7 +9,7 @@
         <artifactId>parent-v2</artifactId>
         <version>1</version>
     </parent>
-    
+
     <groupId>uk.org.ukfederation</groupId>
     <artifactId>ukf-mdnorm</artifactId>
     <version>1.1-SNAPSHOT</version>
@@ -17,6 +17,7 @@
     <name>Metadata Normaliser</name>
     <description>normalises some aspects of a SAML 2.0 metadata file</description>
     <inceptionYear>2010</inceptionYear>
+    <url>https://github.com/ukf/ukf-mdnorm</url>
 
     <repositories>
         <repository>
@@ -36,6 +37,34 @@
     </repositories>
 
     <dependencies>
+        <!-- Compile dependencies -->
+
+        <!-- Runtime dependencies -->
+
+        <!-- Provided dependencies -->
+
+        <!-- Test dependencies -->
     </dependencies>
+
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/ukf/ukf-mdnorm/issues</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:git:git://github.com/ukf/ukf-mdnorm.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:ukf/ukf-mdnorm.git</developerConnection>
+        <url>https://github.com/ukf/ukf-mdnorm</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>iay</id>
+            <name>Ian Young</name>
+            <organization>Ian A. Young</organization>
+            <organizationUrl>http://iay.org.uk</organizationUrl>
+            <timezone>0</timezone>
+        </developer>
+    </developers>
 
 </project>
