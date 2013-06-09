@@ -2,12 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ukf-mdnorm</groupId>
+
+    <groupId>uk.org.ukfederation</groupId>
     <artifactId>ukf-mdnorm</artifactId>
+    <version>1.1-SNAPSHOT</version>
+
     <name>Metadata Normaliser</name>
-    <version>1.0</version>
     <description>normalises some aspects of a SAML 2.0 metadata file</description>
     <inceptionYear>2010</inceptionYear>
+
     <build>
         <plugins>
             <plugin>
@@ -21,6 +24,8 @@
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
     </dependencies>
+
 </project>
