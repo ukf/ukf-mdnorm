@@ -36,16 +36,44 @@ import java.io.Writer;
  * 
  * @author iay
  */
-public class Normalise implements Runnable {
+public final class Normalise implements Runnable {
 
+    /**
+     * Indicates whether to retain odd spaces (ones which do not
+     * align exactly with a tab stop).
+     */
     private static final boolean retainOddSpaces = false;
 
+    /**
+     * Indicates whether to retain blank lines.
+     */
     private static final boolean retainBlankLines = true;
 
+    /**
+     * Number of spaces corresponding to a tab character.
+     */
     private static final int tabSize = 4;
 
+    /**
+     * The file to process.
+     */
     private final File file;
 
+    /**
+     * Constructor.
+     * 
+     * @param file file to process
+     */
+    private Normalise(File file) {
+        this.file = file;
+    }
+
+    /**
+     * Terminate execution as the result of an exception.
+     * 
+     * @param s termination message
+     * @param e exception which caused termination
+     */
     private static void croak(String s, Exception e) {
         e.printStackTrace();
         System.err.println("Internal error: " + s + ": " + e.getMessage());
@@ -56,9 +84,8 @@ public class Normalise implements Runnable {
         CharArrayWriter w = new CharArrayWriter();
         int lead = 0; // amount of leading white space
         boolean start = true; // processing the start of the line
-        int c;
         for (;;) {
-            c = in.read();
+            final int c = in.read();
 
             if (start) {
                 switch (c) {
@@ -84,8 +111,9 @@ public class Normalise implements Runnable {
                     case '\n':
                         // line contains only whitespace
                         lead = 0; // throw away white space entirely
-                        if (retainBlankLines)
+                        if (retainBlankLines) {
                             w.append('\n');
+                        }
                         break;
 
                     default:
@@ -127,6 +155,9 @@ public class Normalise implements Runnable {
                     case '\n':
                         start = true;
                         lead = 0;
+                        w.append((char) c);
+                        break;
+
                     default:
                         w.append((char) c);
                         break;
@@ -205,14 +236,9 @@ public class Normalise implements Runnable {
     }
 
     /**
-     * Constructor.
-     */
-    private Normalise(File file) {
-        this.file = file;
-    }
-
-    /**
      * Command-line entry point.
+     * 
+     * @param args command-line arguments
      */
     public static void main(String[] args) {
         /*
