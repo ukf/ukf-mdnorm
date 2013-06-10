@@ -42,17 +42,17 @@ public final class Normalise implements Runnable {
      * Indicates whether to retain odd spaces (ones which do not
      * align exactly with a tab stop).
      */
-    private static final boolean retainOddSpaces = false;
+    private static final boolean RETAIN_ODD_SPACES = false;
 
     /**
      * Indicates whether to retain blank lines.
      */
-    private static final boolean retainBlankLines = true;
+    private static final boolean RETAIN_BLANK_LINES = true;
 
     /**
      * Number of spaces corresponding to a tab character.
      */
-    private static final int tabSize = 4;
+    private static final int TAB_SIZE = 4;
 
     /**
      * The file to process.
@@ -64,7 +64,7 @@ public final class Normalise implements Runnable {
      * 
      * @param file file to process
      */
-    private Normalise(File file) {
+    private Normalise(final File file) {
         this.file = file;
     }
 
@@ -74,97 +74,18 @@ public final class Normalise implements Runnable {
      * @param s termination message
      * @param e exception which caused termination
      */
-    private static void croak(String s, Exception e) {
+    private static void croak(final String s, final Exception e) {
         e.printStackTrace();
         System.err.println("Internal error: " + s + ": " + e.getMessage());
         System.exit(1);
     }
 
-    private CharArrayWriter process(Reader in) throws IOException {
-        CharArrayWriter w = new CharArrayWriter();
-        int lead = 0; // amount of leading white space
-        boolean start = true; // processing the start of the line
-        for (;;) {
-            final int c = in.read();
-
-            if (start) {
-                switch (c) {
-
-                    case -1:
-                        // end of input at line start
-                        return w;
-
-                    case '\r':
-                        // drop carriage return if we see one
-                        break;
-
-                    case ' ':
-                        lead++;
-                        break;
-
-                    case '\t':
-                        do {
-                            lead++;
-                        } while ((lead % tabSize) != 0);
-                        break;
-
-                    case '\n':
-                        // line contains only whitespace
-                        lead = 0; // throw away white space entirely
-                        if (retainBlankLines) {
-                            w.append('\n');
-                        }
-                        break;
-
-                    default:
-                        // flush leading space as tabs
-                        while (lead >= tabSize) {
-                            lead -= tabSize;
-                            w.append('\t');
-                        }
-
-                        /*
-                         * If the tabs don't make up the required space exactly, optionally make up the difference with
-                         * spaces.
-                         */
-                        if (retainOddSpaces) {
-                            while (lead > 0) {
-                                lead--;
-                                w.append(' ');
-                            }
-                        }
-
-                        // no longer processing leading space
-                        start = false;
-
-                        // retain this character
-                        w.append((char) c);
-                        break;
-
-                }
-
-            } else {
-
-                switch (c) {
-
-                    case -1:
-                        // end of file in middle of line
-                        w.append('\n');
-                        return w;
-
-                    case '\n':
-                        start = true;
-                        lead = 0;
-                        w.append((char) c);
-                        break;
-
-                    default:
-                        w.append((char) c);
-                        break;
-
-                }
-            }
-        }
+    private CharArrayWriter process(final Reader in) throws IOException {
+        final CharArrayWriter w = new CharArrayWriter();
+        final WhitespaceNormaliser norm =
+                new WhitespaceNormaliser(RETAIN_ODD_SPACES, RETAIN_BLANK_LINES, TAB_SIZE);
+        norm.process(in,  w);
+        return w;
     }
 
     public void run() {
@@ -240,7 +161,7 @@ public final class Normalise implements Runnable {
      * 
      * @param args command-line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         /*
          * Parse command-line arguments.
          */

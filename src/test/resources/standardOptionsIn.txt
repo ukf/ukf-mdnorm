@@ -1,0 +1,8 @@
+# standard whitespace normaliser test
+# blank line follows
+
+# nine spaces on a line by itself
+         
+# nine spaces then text
+         text
+# last line
