@@ -70,4 +70,15 @@ public class WhitespaceNormaliserTest {
         Assert.assertEquals(result, expected);
     }
 
+    @Test
+    public void oddSpaces() throws IOException {
+        final Reader in = acquireResource("oddSpacesIn.txt");
+        final String expected = acquireString("oddSpacesOut.txt");
+        final Writer out = new StringWriter();
+        final WhitespaceNormaliser norm = new WhitespaceNormaliser(true, true, 4);
+        norm.process(in,  out);
+        final String result = out.toString();
+        Assert.assertEquals(result, expected);
+    }
+
 }
