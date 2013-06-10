@@ -47,4 +47,16 @@ public class WhitespaceNormaliserTest {
         final String result = out.toString();
         Assert.assertEquals(result, expected);
     }
+
+    @Test
+    public void noBlankLines() throws IOException {
+        final Reader in = acquireResource("noBlankLinesIn.txt");
+        final String expected = acquireString("noBlankLinesOut.txt");
+        final Writer out = new StringWriter();
+        final WhitespaceNormaliser norm = new WhitespaceNormaliser(false, false, 4);
+        norm.process(in,  out);
+        final String result = out.toString();
+        Assert.assertEquals(result, expected);
+    }
+
 }
