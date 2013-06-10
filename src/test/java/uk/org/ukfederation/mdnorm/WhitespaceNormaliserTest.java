@@ -59,4 +59,15 @@ public class WhitespaceNormaliserTest {
         Assert.assertEquals(result, expected);
     }
 
+    @Test
+    public void tabSize() throws IOException {
+        final Reader in = acquireResource("tabSizeIn.txt");
+        final String expected = acquireString("tabSizeOut.txt");
+        final Writer out = new StringWriter();
+        final WhitespaceNormaliser norm = new WhitespaceNormaliser(false, true, 3);
+        norm.process(in,  out);
+        final String result = out.toString();
+        Assert.assertEquals(result, expected);
+    }
+
 }
