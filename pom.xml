@@ -13,6 +13,7 @@
     <groupId>uk.org.ukfederation</groupId>
     <artifactId>ukf-mdnorm</artifactId>
     <version>1.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <name>Metadata Normaliser</name>
     <description>normalises some aspects of a SAML 2.0 metadata file</description>
@@ -38,6 +39,10 @@
 
     <dependencies>
         <!-- Compile dependencies -->
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+        </dependency>
 
         <!-- Runtime dependencies -->
 
@@ -45,6 +50,25 @@
 
         <!-- Test dependencies -->
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/assembly/bin.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <issueManagement>
         <system>Github</system>

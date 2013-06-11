@@ -12,6 +12,10 @@ The main CLI entry point for the application is the `uk.org.ukfederation.mdnorm.
 
 The command line consists of a single argument which is the name of the file to be processed.  The file is read, processed into an in-memory form and then written back to its original location.
 
+The following options are also available:
+
+* `--help` prints usage information and then exits
+
 ## Copyright and License
 
 The entire package is Copyright (C) 2013, University of Edinburgh.

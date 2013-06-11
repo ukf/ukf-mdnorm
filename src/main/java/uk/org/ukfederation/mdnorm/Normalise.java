@@ -30,6 +30,10 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.List;
+
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.ParameterException;
 
 /**
  * Metadata file normalisation.
@@ -162,15 +166,38 @@ public final class Normalise implements Runnable {
      * @param args command-line arguments
      */
     public static void main(final String[] args) {
+        final String progName = "Normalise";
+        final NormaliseCLI cli = new NormaliseCLI();
+        final JCommander jc = new JCommander(cli);
+        jc.setProgramName(progName);
+        
+        try {
+            jc.parse(args);
+        } catch (ParameterException e) {
+            System.out.println(progName + ": " + e.getMessage());
+            System.out.println();
+            jc.usage();
+            System.exit(1);
+        }
+        
         /*
-         * Parse command-line arguments.
+         * Handle the "help" command.
          */
-        if (args.length != 1) {
-            System.err.println("Usage: Normalise <file>");
+        if (cli.isHelp()) {
+            jc.usage();
+            return;
+        }
+        
+        /*
+         * Acquire name of file to process.
+         */
+        List<String> files = cli.getParameters();
+        if (files.size() != 1) {
+            jc.usage();
             System.exit(1);
         }
 
-        Normalise norm = new Normalise(new File(args[0]));
+        Normalise norm = new Normalise(new File(files.get(0)));
         norm.run();
     }
 
