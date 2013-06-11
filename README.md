@@ -15,6 +15,17 @@ The command line consists of a single argument which is the name of the file to 
 The following options are also available:
 
 * `--help` prints usage information and then exits
+* `--tabSize=N` sets the number of spaces deemed equivalent to a TAB character (default: four spaces)
+* `--discardBlankLines` requests that lines containing only white space are removed (by default, they are retained)
+* `--keepOddSpaces` requests that spaces which don't cause alignment to a tab stop are retained (by default, they are discarded)
+
+## Tab and Space Handling
+
+The application attempts to normalise leading white space on a line into a series of TAB characters.  The `--tabSize` option (defaulting to `--tabSize=4`) sets the assumed size of a tab stop in spaces, for both input and output.
+
+By default, space characters which don't cause alignment with a tab stop are discarded.  For example, an input line which starts with nine spaces will be normalised to two TAB characters by default.  With the `--keepOddSpaces` option, the result will be two TAB characters and one space character.
+
+Lines which contain entirely of white space are normally retained as an empty line.  Empty lines are discarded if the `--discardBlankLines` option is used.  Note that the application is blind to the structure of the file, so that blank lines will be discarded in all contexts, even within XML comments.
 
 ## Copyright and License
 

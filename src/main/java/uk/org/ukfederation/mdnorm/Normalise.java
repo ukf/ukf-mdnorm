@@ -46,17 +46,17 @@ public final class Normalise implements Runnable {
      * Indicates whether to retain odd spaces (ones which do not
      * align exactly with a tab stop).
      */
-    private static final boolean RETAIN_ODD_SPACES = false;
+    private final boolean retainOddSpaces;
 
     /**
      * Indicates whether to retain blank lines.
      */
-    private static final boolean RETAIN_BLANK_LINES = true;
+    private final boolean retainBlankLines;
 
     /**
      * Number of spaces corresponding to a tab character.
      */
-    private static final int TAB_SIZE = 4;
+    private final int tabSize;
 
     /**
      * The file to process.
@@ -66,10 +66,14 @@ public final class Normalise implements Runnable {
     /**
      * Constructor.
      * 
-     * @param file file to process
+     * @param theFile file to process
+     * @param cli command line options
      */
-    private Normalise(final File file) {
-        this.file = file;
+    private Normalise(final File theFile, NormaliseCLI cli) {
+        file = theFile;
+        tabSize = cli.getTabSize();
+        retainOddSpaces = cli.isKeepingOddSpaces();
+        retainBlankLines = !cli.isDiscardingBlankLines();
     }
 
     /**
@@ -84,14 +88,26 @@ public final class Normalise implements Runnable {
         System.exit(1);
     }
 
+    /**
+     * Process the characters from the provided reader into a character
+     * array.
+     * 
+     * @param in source of characters to process
+     * @return processed characters as a CharArrayWriter
+     * 
+     * @throws IOException potentially thrown by the reader or writer
+     */
     private CharArrayWriter process(final Reader in) throws IOException {
         final CharArrayWriter w = new CharArrayWriter();
         final WhitespaceNormaliser norm =
-                new WhitespaceNormaliser(RETAIN_ODD_SPACES, RETAIN_BLANK_LINES, TAB_SIZE);
+                new WhitespaceNormaliser(retainOddSpaces, retainBlankLines, tabSize);
         norm.process(in,  w);
         return w;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void run() {
 
         /*
@@ -197,7 +213,7 @@ public final class Normalise implements Runnable {
             System.exit(1);
         }
 
-        Normalise norm = new Normalise(new File(files.get(0)));
+        Normalise norm = new Normalise(new File(files.get(0)), cli);
         norm.run();
     }
 

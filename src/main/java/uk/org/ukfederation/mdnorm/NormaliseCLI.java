@@ -20,10 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.beust.jcommander.Parameter;
+import com.beust.jcommander.Parameters;
 
 /**
  * Command-line interface handling for the metadata normaliser.
  */
+@Parameters(separators = "=")
 public class NormaliseCLI {
     
     /**
@@ -37,6 +39,28 @@ public class NormaliseCLI {
      */
     @Parameter(names = "--help", description = "give usage information, then exit", help = true)
     private boolean help;
+
+    /**
+     * Parameter specifier for the --tabSize option.
+     */
+    @Parameter(names = "--tabSize",
+            description = "spaces per TAB character (default: --tabSize=4)",
+            validateWith = TabSizeValidator.class)
+    private int tabSize = 4;
+    
+    /**
+     * Parameter specifier for the --discardBlankLines option.
+     */
+    @Parameter(names = "--discardBlankLines",
+            description = "discard lines which only contain white space")
+    private boolean discardingBlankLines;
+    
+    /**
+     * Parameter specifier for the --keepOddSpaces option.
+     */
+    @Parameter(names = "--keepOddSpaces",
+            description = "keep spaces which don't align with TABs")
+    private boolean keepingOddSpaces;
     
     /**
      * Getter for the "left over" parts of the input.
@@ -54,5 +78,32 @@ public class NormaliseCLI {
      */
     public boolean isHelp() {
         return help;
+    }
+    
+    /**
+     * Return the number of spaces corresponding to a TAB character.
+     * 
+     * @return number of spaces
+     */
+    public int getTabSize() {
+        return tabSize;
+    }
+    
+    /**
+     * Indicate whether blank lines are to be discarded.
+     * 
+     * @return true if blank lines are to be discarded.
+     */
+    public boolean isDiscardingBlankLines() {
+        return discardingBlankLines;
+    }
+    
+    /**
+     * Indicate whether odd spaces are to be retained.
+     * 
+     * @return true if odd spaces are to be retained.
+     */
+    public boolean isKeepingOddSpaces() {
+        return keepingOddSpaces;
     }
 }
