@@ -65,7 +65,9 @@ public class WhitespaceNormaliser {
      * 
      * @throws IOException if thrown by the reader or writer
      */
+    // CheckStyle: CyclomaticComplexity|MethodLength OFF -- more readable not split up
     public void process(final Reader in, final Writer out) throws IOException {
+        // CheckStyle:CyclomaticComplexity|MethodLength ON
         int lead = 0; // amount of leading white space
         boolean start = true; // processing the start of the line
         for (;;) {

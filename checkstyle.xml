@@ -11,6 +11,7 @@
 <module name="Checker">
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
+    <module name="FileContentsHolder"/>
     <property name="tabWidth" value="4"/>
     <module name="JavadocMethod">
       <property name="allowThrowsTagsForSubclasses" value="true"/>
@@ -96,6 +97,11 @@
     <module name="TrailingComment"/>
     <module name="EqualsAvoidNull"/>
     <module name="ModifiedControlVariable"/>
+  </module>
+  <module name="SuppressionCommentFilter">
+    <property name="offCommentFormat" value="CheckStyle\:\s*([\w\|]+) OFF"/>
+    <property name="onCommentFormat" value="CheckStyle\:\s*([\w\|]+) ON"/>
+    <property name="checkFormat" value="$1"/>
   </module>
   <module name="FileTabCharacter"/>
   <module name="FileLength">
