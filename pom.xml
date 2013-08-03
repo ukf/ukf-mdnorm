@@ -20,6 +20,11 @@
     <inceptionYear>2010</inceptionYear>
     <url>https://github.com/ukf/ukf-mdnorm</url>
 
+    <properties>
+        <checkstyle.version>2.10</checkstyle.version>
+        <checkstyle.configLocation>checkstyle.xml</checkstyle.configLocation>
+    </properties>
+
     <repositories>
         <repository>
             <id>shib-release</id>
@@ -51,6 +56,23 @@
         <!-- Test dependencies -->
     </dependencies>
 
+    <build>
+        <plugins>
+            <!--
+                Checkstyle configuration for checkstyle:* goals called directly
+                from the command line.
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <configLocation>${checkstyle.configLocation}</configLocation>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
     <profiles>
         <profile>
             <id>release</id>
@@ -69,6 +91,19 @@
             </build>
         </profile>
     </profiles>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${checkstyle.version}</version>
+                <configuration>
+                    <configLocation>${checkstyle.configLocation}</configLocation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 
     <issueManagement>
         <system>Github</system>
