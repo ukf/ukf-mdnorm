@@ -111,69 +111,44 @@ public final class Normalise implements Runnable {
     public void run() {
 
         /*
-         * Open the input file and construct a Reader to access it.
+         * Open the input file and then process it.
          */
-        InputStream is;
-        try {
-            is = new FileInputStream(file);
+        CharArrayWriter w;
+        try (InputStream is = new FileInputStream(file);
+                Reader in = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
+            /*
+             * Run through the input file processing each character in turn until we get to the end. The results are
+             * collected in a CharArrayWriter.
+             */
+            w = process(in);
         } catch (FileNotFoundException e) {
             croak("input file not found", e);
             return;
-        }
-        Reader in;
-        try {
-            in = new BufferedReader(new InputStreamReader(is, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             croak("UTF-8 not supported", e);
             return;
-        }
-
-        /*
-         * Run through the input file processing each character in turn until we get to the end. The results are
-         * collected in a CharArrayWriter.
-         */
-        CharArrayWriter w;
-        try {
-            w = process(in);
         } catch (IOException e) {
             croak("I/O exception while processing file", e);
             return;
         }
 
         /*
-         * We're finished with the input file.
-         */
-        try {
-            in.close();
-        } catch (IOException e) {
-            croak("can't close input file", e);
-            return;
-        }
-
-        /*
          * Write the processed data back into the same file.
          */
-        OutputStream os;
-        try {
-            os = new FileOutputStream(file);
+        try (OutputStream os = new FileOutputStream(file);
+                Writer out = new OutputStreamWriter(os, "UTF-8")) {
+            w.writeTo(out);
         } catch (FileNotFoundException e) {
             croak("output file not found", e);
             return;
-        }
-        Writer out;
-        try {
-            out = new OutputStreamWriter(os, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             croak("UTF-8 not supported", e);
             return;
-        }
-        try {
-            w.writeTo(out);
-            out.close();
         } catch (IOException e) {
             croak("I/O exception while writing output file", e);
             return;
         }
+        
     }
 
     /**
