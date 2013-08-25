@@ -68,8 +68,13 @@ public class WhitespaceNormaliser {
     // CheckStyle: CyclomaticComplexity|MethodLength OFF -- more readable not split up
     public void process(final Reader in, final Writer out) throws IOException {
         // CheckStyle:CyclomaticComplexity|MethodLength ON
-        int lead = 0; // amount of leading white space
-        boolean start = true; // processing the start of the line
+        
+        // amount of leading white space
+        int lead = 0;
+        
+        // processing the start of the line
+        boolean start = true;
+        
         for (;;) {
             final int c = in.read();
 
@@ -96,7 +101,8 @@ public class WhitespaceNormaliser {
 
                     case '\n':
                         // line contains only whitespace
-                        lead = 0; // throw away white space entirely
+                        // throw away white space entirely
+                        lead = 0;
                         if (retainingBlankLines) {
                             out.append('\n');
                         }
