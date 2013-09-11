@@ -1,5 +1,9 @@
 # Release Notes for `ukf-mdnorm`
 
+## Version 1.2.1 ##
+
+* Take advantage of Java 7 type inference.
+
 ## Version 1.2.0
 
 * Change parent POM to the Shibboleth V3 parent POM, so as to switch to Java 7.

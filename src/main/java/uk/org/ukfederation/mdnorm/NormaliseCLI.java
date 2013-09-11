@@ -32,7 +32,7 @@ public class NormaliseCLI {
      * Parameter specifier for "left over" parts of the input.
      */
     @Parameter(description = "<file to process>")
-    private List<String> parameters = new ArrayList<String>();
+    private List<String> parameters = new ArrayList<>();
     
     /**
      * Parameter specifier for the --help option.
