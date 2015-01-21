@@ -58,7 +58,6 @@
     <module name="IllegalInstantiation"/>
     <module name="InnerAssignment"/>
     <module name="MissingSwitchDefault"/>
-    <module name="RedundantThrows"/>
     <module name="SimplifyBooleanExpression"/>
     <module name="SimplifyBooleanReturn"/>
     <module name="FinalClass"/>
@@ -78,7 +77,6 @@
     <module name="ExplicitInitialization"/>
     <module name="FallThrough"/>
     <module name="IllegalThrows"/>
-    <module name="JUnitTestCase"/>
     <module name="MultipleVariableDeclarations"/>
     <module name="PackageDeclaration"/>
     <module name="ParameterAssignment"/>
